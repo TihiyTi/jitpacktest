@@ -10,10 +10,33 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
+subprojects{
+    apply plugin: 'java'
+//    apply plugin: 'maven'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+//    targetCompatibility = 1.8
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    artifacts {
+        archives sourcesJar
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+
 repositories {
     mavenCentral()
 }
-
+project(':module1'){
+    
+}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
