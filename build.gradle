@@ -1,22 +1,25 @@
-plugins {
-    id 'java'
+//plugins {
+//    id 'java'
+//}
+allprojects {
+    version = "1.0"
 }
 
-group 'com.ti'
-version '1.0'
+//group 'com.ti'
+//version '1.0'
 
-apply plugin:'java'
-apply plugin: 'idea'
-
-sourceCompatibility = 1.8
+//apply plugin:'java'
+//apply plugin: 'idea'
+//
+//sourceCompatibility = 1.8
 
 subprojects{
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: 'idea'
+//    apply plugin: 'idea'
 
     sourceCompatibility = 1.8
-//    targetCompatibility = 1.8
+    targetCompatibility = 1.8
 
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'
