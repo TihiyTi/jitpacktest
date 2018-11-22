@@ -1,5 +1,7 @@
+package com.ti;
+
 public class Module1 {
     public String get(){
-        return "Module1";
+        return "com.ti.Module1";
     }
 }

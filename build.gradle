@@ -5,7 +5,7 @@ allprojects {
     version = "1.0"
 }
 
-//group 'com.ti'
+//group 'com.com.ti'
 //version '1.0'
 
 //apply plugin:'java'
