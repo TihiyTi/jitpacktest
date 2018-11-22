@@ -6,12 +6,14 @@ allprojects {
 }
 
 //group 'com.com.ti'
-//version '1.0'
+version '1.0'
 
-//apply plugin:'java'
-//apply plugin: 'idea'
+apply plugin:'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
 //
-//sourceCompatibility = 1.8
+sourceCompatibility = 1.8
 
 subprojects{
     apply plugin: 'java'
