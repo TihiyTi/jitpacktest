@@ -1,44 +1,90 @@
-//plugins {
-//    id 'java'
-//}
-allprojects {
-    version = "1.0"
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.beryx.jlink' version '2.25.0'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
-//group 'com.com.ti'
-version '1.0'
-
-apply plugin:'java'
-apply plugin: 'idea'
-apply plugin: 'maven'
-
-//
-sourceCompatibility = 1.8
-
-subprojects{
-    apply plugin: 'java'
-    apply plugin: 'maven'
-//    apply plugin: 'idea'
-
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-    artifacts {
-        archives sourcesJar
-    }
-    repositories {
-        mavenCentral()
-    }
+ext {
+    javaVersion = JavaVersion.VERSION_22
 }
 
+group 'com.example'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
+
+ext {
+    junitVersion = '5.8.2'
+}
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'com.ti.jittest'
+//    mainClass = 'com.example.demo1.HelloApplication'
+}
+
+allprojects {
+    group = 'com.ak'
+    version = '2023.03.04'
+    apply plugin: 'idea'
+    idea {
+        module {
+            inheritOutputDirs = true
+        }
+    }
+
+    sourceSets {
+        main.output.resourcesDir = main.java.classesDirectory
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url = 'https://plugins.gradle.org/m2/'
+        }
+    }
+}
+//javafx {
+//    version = '22.0.2'
+//    modules = ['javafx.controls', 'javafx.fxml']
+//}
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+//    implementation('org.controlsfx:controlsfx:11.1.1')
+//    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jlink {
+    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'app'
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
 }
